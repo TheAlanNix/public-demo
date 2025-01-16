@@ -18,7 +18,7 @@ jobs:
       matrix:
         include:
           - dockerfile: ./sast-demo
-            image: wizsensordemos.azurecr.io/sast-demo
+            image: wiztesting.azurecr.io/sast-demo
 
     steps:
       - name: Checkout
