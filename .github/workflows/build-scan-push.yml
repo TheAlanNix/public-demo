@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
+      WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
     strategy:
       fail-fast: false
       matrix:
@@ -70,7 +73,7 @@ jobs:
           if [[ ! -z "${{ vars.WIZ_ENV }}" && "${{ vars.WIZ_ENV }}" != "app" ]]; then export WIZ_ENV=${{ vars.WIZ_ENV }}; fi
           curl -Lo wizcli https://wizcli.app.wiz.io/latest/wizcli-linux-amd64
           chmod +x wizcli
-          ./wizcli auth --id "${{ secrets.WIZ_CLIENT_ID }}" --secret "${{ secrets.WIZ_CLIENT_SECRET }}"
+          ./wizcli auth
           ./wizcli docker scan --image ${{ matrix.image }} --dockerfile "${{ matrix.dockerfile }}/Dockerfile"
           ./wizcli docker tag --image ${{ matrix.image }}
         continue-on-error: true
